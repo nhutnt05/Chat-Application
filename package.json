@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/nhutnt05/Chat-Application#readme",
   "description": "",
- "dependencies": {
+  "dependencies": {
     "body-parser": "^2.2.0",
     "cloudinary": "^2.7.0",
     "cookie-parser": "^1.4.7",
