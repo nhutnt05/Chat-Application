@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 const generate = require("../helpers/generate");
 
-//Create Schema(bo khung) new
+
 const forgotPasswordSchema = new mongoose.Schema(
   {
     email: String,

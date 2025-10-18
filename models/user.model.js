@@ -26,7 +26,6 @@ const userSchema = new mongoose.Schema({
   timestamps:true
 });
 
-// 'Product' is model (.model to khoi tao), tham số 3 là table in DB
 const User = mongoose.model("User", userSchema, "users");
 
 

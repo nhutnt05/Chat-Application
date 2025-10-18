@@ -44,3 +44,27 @@ module.exports.forgotPasswordPost = (req, res, next) => {
 
   next();
 }
+
+
+module.exports.resetPasswordPost = (req, res, next) => {
+
+  if (!req.body.password) {
+    req.flash('error', `Mật khẩu không được để trống!`);
+    res.redirect(req.get("Referer") || "/")
+    return;
+  }
+
+  if (!req.body.confirmPassword) {
+    req.flash('error', `Vui lòng xác nhận lại mật khẩu!`);
+    res.redirect(req.get("Referer") || "/")
+    return;
+  }
+
+    if (req.body.password != req.body.confirmPassword) {
+    req.flash('error', `Xác nhận mật khẩu không trùng khớp!`);
+    res.redirect(req.get("Referer") || "/")
+    return;
+  }
+
+  next();
+}

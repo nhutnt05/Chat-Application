@@ -7,6 +7,9 @@ const session = require('express-session');
 const flash = require('express-flash');
 const moment = require("moment");
 
+const htttp = require("http");
+const { Server } = require("socket.io");
+
 require('dotenv').config();
 
 //include file to use require
@@ -19,6 +22,7 @@ database.connect();
 const app = express();
 const port = process.env.PORT;
 
+
 app.use(methodOverride('_method'));
 
 // parse application/x-www-form-urlencoded
@@ -26,6 +30,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
+
+// SocketIO
+const server = htttp.createServer(app);
+// connect socket io to server
+const io = new Server(server);
+global._io = io;
+
+
 
 // Flash
 app.use(cookieParser('HAHAHAHAHA'));
@@ -53,6 +65,6 @@ app.get(/.*/, (req, res) => {
 
 
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 })
