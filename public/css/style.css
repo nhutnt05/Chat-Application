@@ -103,6 +103,7 @@
   flex-direction: column;
   gap: 12px;
   background: #fff;
+  max-height: 450px;
 }
 
 /* ====== Tin nhắn vào ====== */

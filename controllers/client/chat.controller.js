@@ -4,16 +4,25 @@ const User = require("../../models/user.model");
 // [GET]/chat/
 module.exports.index = async (req, res) => {
   const userId = res.locals.user.id;
-  // SocketIO
+  const fullName = res.locals.user.id;
+  // SocketIO (Server)
   _io.once('connection', (socket) => {
     // Listen client send message
-    socket.on("client_send_message", (content) => {
+    socket.on("client_send_message", async (content) => {
       // Save message to database
       const newChat = new Chat({
         user_id: userId,
         content: content,
       });
-      newChat.save();
+      await newChat.save();
+
+      // Return data to the clients(Return Realtime)-objects
+      _io.emit("server_return_message", {
+        user_id: userId,
+        fullName: fullName,
+        content: content,
+      })
+
     });
     // End SocketIO
   });
