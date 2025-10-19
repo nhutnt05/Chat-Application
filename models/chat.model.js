@@ -1,6 +1,5 @@
 // import mongoose
 const mongoose = require("mongoose");
-const generate = require("../helpers/generate");
 
 //Create Schema(bo khung) new
 const chatSchema = new mongoose.Schema({

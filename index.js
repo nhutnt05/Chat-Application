@@ -7,7 +7,7 @@ const session = require('express-session');
 const flash = require('express-flash');
 const moment = require("moment");
 
-const htttp = require("http");
+const http = require("http");
 const { Server } = require("socket.io");
 
 require('dotenv').config();
@@ -32,11 +32,10 @@ app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
 // SocketIO
-const server = htttp.createServer(app);
+const server = http.createServer(app);
 // connect socket io to server
 const io = new Server(server);
 global._io = io;
-
 
 
 // Flash
