@@ -34,10 +34,20 @@ socket.on("server_return_message", (data) => {
 
   div.innerHTML = `
     ${htmlFullName}
-    <div class="inner-contet">${data.content}</div>
+    <div class="inner-content">${data.content}</div>
   `;
 
   // add new message to body chat
   bodyChat.appendChild(div);
+  bodyChat.scrollTop = bodyChat.scrollHeight;
 });
 // End server_return_message
+
+
+// Scroll to bottom chat body
+const bodyChat = document.querySelector(".chat .inner-body");
+if (bodyChat) {
+  // Scroll way height of body chat
+  bodyChat.scrollTop = bodyChat.scrollHeight;
+}
+// End Scroll to bottom chat body

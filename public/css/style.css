@@ -95,7 +95,7 @@
 }
 
 /* ====== Phần thân chứa tin ====== */
-.inner-body {
+.chat .inner-body {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
