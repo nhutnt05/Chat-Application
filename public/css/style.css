@@ -56,6 +56,7 @@
   from {
     right: 15px;
   }
+
   to {
     right: -100%;
     display: none;
@@ -152,7 +153,8 @@
 .inner-foot {
   background: #fff;
   border-top: 1px solid #eee;
-  padding: 8px 12px; /* Giảm padding cho gọn */
+  padding: 8px 12px;
+  /* Giảm padding cho gọn */
 }
 
 .inner-form {
@@ -203,18 +205,34 @@
 
 .inner-form button i {
   font-size: 17px;
+  margin: 0 auto;
 }
 
 /* ====== Thanh cuộn ====== */
 .inner-body::-webkit-scrollbar {
   width: 6px;
 }
+
 .inner-body::-webkit-scrollbar-thumb {
   background: #ccc;
   border-radius: 10px;
 }
+
 .inner-body::-webkit-scrollbar-thumb:hover {
   background: #aaa;
 }
 
 /* End Chat */
+
+/* Tooltip Emoji Picker */
+.tooltip {
+  visibility: hidden;
+}
+
+.tooltip.shown{
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/* End Tooltip Emoji Picker */
