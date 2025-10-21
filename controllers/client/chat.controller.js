@@ -4,7 +4,7 @@ const User = require("../../models/user.model");
 // [GET]/chat/
 module.exports.index = async (req, res) => {
   const userId = res.locals.user.id;
-  const fullName = res.locals.user.id;
+  const fullName = res.locals.user.fullName;
   // SocketIO (Server)
   _io.once('connection', (socket) => {
     // Listen client send message
@@ -22,10 +22,20 @@ module.exports.index = async (req, res) => {
         fullName: fullName,
         content: content,
       })
-
     });
-    // End SocketIO
+
+    socket.on("client_send_typing", (type) => {
+      socket.broadcast.emit("server_return_typing", {
+        user_id: userId,
+        fullName: fullName,
+        type: type,
+      });
+    });
+
+
   });
+  // End SocketIO
+
 
   // Get Data Chat from Databases
   const chats = await Chat.find({
@@ -43,4 +53,6 @@ module.exports.index = async (req, res) => {
     pageTitle: "Chat",
     chats: chats
   });
+
+
 }
