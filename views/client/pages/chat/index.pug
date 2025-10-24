@@ -30,7 +30,6 @@ block main
               //-     span
               //-     span
               //-     span
-
           .inner-foot
             form(
               class="inner-form"
@@ -41,6 +40,7 @@ block main
                 placeholder="Nhập nội dung..."
                 name="content"
               )
+              div(class="custom-file-container" data-upload-id="upload-image")
               span(class="emoji-button btn btn-light mx-2") 
                 i( class="fa-regular fa-face-smile" class="text-primary")
               button
@@ -48,5 +48,3 @@ block main
 
   div(class="tooltip" role="tooltip")           
     emoji-picker(class="light")
- 
-                

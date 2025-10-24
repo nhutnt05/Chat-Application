@@ -1,6 +1,16 @@
 import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js'
 // import { set } from 'mongoose';
 
+// FileUploadWithPreview
+import { FileUploadWithPreview } from 'https://unpkg.com/file-upload-with-preview/dist/index.js';
+
+const upload = new FileUploadWithPreview('upload-image', {
+  multiple: true,
+  maxFileCount: 10
+});
+// End FileUploadWithPreview
+
+
 // client_send_message
 const formSendData = document.querySelector(".chat .inner-form");
 
@@ -10,7 +20,10 @@ if (formSendData) {
 
     const content = e.target.elements.content.value;
 
-    if (content) {
+    const images = upload.cachedFileArray || [];
+
+
+    if (content || images.length > 0) {
       // emit: send message
       // SocketIO (Client)
       socket.emit("client_send_message", content);
@@ -99,9 +112,9 @@ if (emojiPicker) {
 
     // Alway index end input after insert emoji
     const indexEnd = inputContent.value.length;
-    inputContent.setSelectonRange(indexEnd,indexEnd);
+    inputContent.setSelectonRange(indexEnd, indexEnd);
     inputContent.focus();
-    
+
     showTyping();
   });
 
