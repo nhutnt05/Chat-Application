@@ -36,7 +36,6 @@
 /* End Footer */
 
 
-
 /* Show Alert */
 [show-alert] {
   position: fixed;
@@ -222,6 +221,39 @@
   background: #aaa;
 }
 
+.chat .inner-body .inner-images img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;         /* hình đầy khung, không bị viền trắng */
+  background-color: #f5f5f5; /* nhẹ hơn */
+  padding: 4px;
+  margin: 4px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.chat .inner-body .inner-images img:hover {
+  transform: scale(1.05); /* hiệu ứng phóng nhẹ khi hover */
+}
+
+/* Ảnh trong tin nhắn gửi đi */
+.chat .inner-body .inner-outgoing .inner-images {
+  margin-left: auto;
+  text-align: right;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* Ảnh trong tin nhắn nhận vào */
+.chat .inner-body .inner-incoming .inner-images {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+
 /* End Chat */
 
 /* Tooltip Emoji Picker */
@@ -229,10 +261,11 @@
   visibility: hidden;
 }
 
-.tooltip.shown{
+.tooltip.shown {
   visibility: visible;
   opacity: 1;
 }
+
 /* End Tooltip Emoji Picker */
 
 /* box-typing */
@@ -256,7 +289,7 @@
   animation: blink 1.5s infinite;
   height: 5px;
   width: 5px;
-  background: #252525; 
+  background: #252525;
   border-radius: 50%;
   display: inline-block;
   margin: 0 3px;
@@ -274,9 +307,11 @@
   0% {
     opacity: 0.1;
   }
+
   20% {
     opacity: 1;
   }
+
   100% {
     opacity: 0.1;
   }

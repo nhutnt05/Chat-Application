@@ -20,14 +20,21 @@ if (formSendData) {
 
     const content = e.target.elements.content.value;
 
+    // All imgae save cash file array
     const images = upload.cachedFileArray || [];
 
 
     if (content || images.length > 0) {
-      // emit: send message
+      // emit: send message, images to server
       // SocketIO (Client)
-      socket.emit("client_send_message", content);
+      socket.emit("client_send_message",
+        {
+          content: content,
+          images: images
+        }
+      );
       e.target.elements.content.value = "";
+      upload.resetPreviewPanel();
       // Hidden typing when send message
       socket.emit("client_send_typing", "hidden");
     }
@@ -45,6 +52,9 @@ socket.on("server_return_message", (data) => {
 
   const div = document.createElement("div");
   let htmlFullName = "";
+  let htmlContent = "";
+  let htmlImages = "";
+
   if (data.user_id == my_id) {
     div.classList.add("inner-outgoing");
   } else {
@@ -52,9 +62,26 @@ socket.on("server_return_message", (data) => {
     htmlFullName = `<div class="inner-name">${data.fullName}</div>`;
   }
 
+  if (data.images.length > 0) {
+    htmlContent = `
+      <div class="inner-content">${data.content}</div>;
+    `
+  }
+
+  if (data.content) {
+    htmlImages += ` <div class="inner-images">`;
+
+    for(item of data.images){
+      htmlImages+= `<img src="${item}" alt="image_chat"/>`;
+    }
+
+    htmlImages+= `</div>`;   
+  }
+
   div.innerHTML = `
     ${htmlFullName}
-    <div class="inner-content">${data.content}</div>
+    ${htmlContent}
+    ${htmlImages}
   `;
 
   // add new message to body chat && message before box typing

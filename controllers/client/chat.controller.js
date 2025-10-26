@@ -1,5 +1,6 @@
 const Chat = require("../../models/chat.model");
 const User = require("../../models/user.model");
+const uploadToCloudinary = require('../../helpers/uploadToCloudinary');
 
 // [GET]/chat/
 module.exports.index = async (req, res) => {
@@ -7,12 +8,20 @@ module.exports.index = async (req, res) => {
   const fullName = res.locals.user.fullName;
   // SocketIO (Server)
   _io.once('connection', (socket) => {
-    // Listen client send message
-    socket.on("client_send_message", async (content) => {
+    // Listen client send message(object data)
+    socket.on("client_send_message", async (data) => {
+      
+      let images = [];
+      for(const itemImageBuffer of data.images){
+        const linkImage = await uploadToCloudinary(itemImageBuffer);
+        images.push(linkImage);
+      }
+      
       // Save message to database
       const newChat = new Chat({
         user_id: userId,
-        content: content,
+        content: data.content,
+        images: images
       });
       await newChat.save();
 
@@ -20,7 +29,8 @@ module.exports.index = async (req, res) => {
       _io.emit("server_return_message", {
         user_id: userId,
         fullName: fullName,
-        content: content,
+        content: data.content,
+        images: images
       })
     });
 

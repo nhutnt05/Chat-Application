@@ -15,8 +15,13 @@ block main
               div(class=(chat.infoUser.id == user.id ? "inner-outgoing" : "inner-incoming"))
                 if chat.infoUser.id != user.id
                   .inner-name #{chat.infoUser.fullName}
-                .inner-content
-                  | #{chat.content}
+                if(chat.content)
+                  .inner-content
+                    | #{chat.content}
+                if(chat.content)
+                  .inner-images
+                    each item in chat.images
+                      img(src=item alt="image_chat")
             div(class="inner-list-typing")
               //- div(class="box-typing")
               //-   div(class="inner-name") Le Van A
@@ -40,7 +45,7 @@ block main
                 placeholder="Nhập nội dung..."
                 name="content"
               )
-              div(class="custom-file-container" data-upload-id="upload-image")
+              div(class="custom-file-container col-sm-5" data-upload-id="upload-image")
               span(class="emoji-button btn btn-light mx-2") 
                 i( class="fa-regular fa-face-smile" class="text-primary")
               button
