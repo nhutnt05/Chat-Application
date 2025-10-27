@@ -71,11 +71,11 @@ socket.on("server_return_message", (data) => {
   if (data.images.length > 0) {
     htmlImages += ` <div class="inner-images">`;
 
-    for(const item of data.images){
-      htmlImages+= `<img src="${item}" alt="image_chat"/>`;
+    for (const item of data.images) {
+      htmlImages += `<img src="${item}" alt="image_chat"/>`;
     }
 
-    htmlImages+= `</div>`;   
+    htmlImages += `</div>`;
   }
 
   div.innerHTML = `
@@ -87,6 +87,12 @@ socket.on("server_return_message", (data) => {
   // add new message to body chat && message before box typing
   bodyChat.insertBefore(div, boxTyping);
   bodyChat.scrollTop = bodyChat.scrollHeight;
+
+  // Privew Images
+  const chatImages = div.querySelector(".inner-images");
+  if (chatImages) {
+    const gallery = new Viewer(chatImages);
+  }
 });
 // End server_return_message
 
@@ -188,3 +194,10 @@ if (listTyping) {
 
 // end server_return_typing
 
+// Preview Images
+const chatImages = document.querySelector(".chat .inner-body");
+
+if (chatImages) {
+  const gallery = new Viewer(chatImages);
+}
+// End Preview Images
