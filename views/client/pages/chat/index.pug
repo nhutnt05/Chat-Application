@@ -18,11 +18,14 @@ block main
                 if(chat.content)
                   .inner-content
                     | #{chat.content}
-                if(chat.content)
+                if(chat.images)
                   .inner-images
                     each item in chat.images
                       img(src=item alt="image_chat")
             div(class="inner-list-typing")
+
+          .inner-preview-images 
+            div(class="custom-file-container" data-upload-id="upload-image")
               //- div(class="box-typing")
               //-   div(class="inner-name") Le Van A
               //-   div(class="inner-dots")
@@ -45,7 +48,11 @@ block main
                 placeholder="Nhập nội dung..."
                 name="content"
               )
-              div(class="custom-file-container col-sm-5" data-upload-id="upload-image")
+              label(
+                for="file-upload-with-preview-upload-image"
+                class="btn btn-light mx-2 mb-0"
+                ) 
+                <i class="fa-solid fa-image  text-primary"></i>
               span(class="emoji-button btn btn-light mx-2") 
                 i( class="fa-regular fa-face-smile" class="text-primary")
               button

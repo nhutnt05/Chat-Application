@@ -62,16 +62,16 @@ socket.on("server_return_message", (data) => {
     htmlFullName = `<div class="inner-name">${data.fullName}</div>`;
   }
 
-  if (data.images.length > 0) {
+  if (data.content) {
     htmlContent = `
-      <div class="inner-content">${data.content}</div>;
+      <div class="inner-content">${data.content}</div>
     `
   }
 
-  if (data.content) {
+  if (data.images.length > 0) {
     htmlImages += ` <div class="inner-images">`;
 
-    for(item of data.images){
+    for(const item of data.images){
       htmlImages+= `<img src="${item}" alt="image_chat"/>`;
     }
 
