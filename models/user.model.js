@@ -4,7 +4,7 @@ const generate = require("../helpers/generate");
 
 //Create Schema(bo khung) new
 const userSchema = new mongoose.Schema({
-  fullName: String, 
+  fullName: String,
   email: String,
   password: String,
   tokenUser: {
@@ -13,6 +13,17 @@ const userSchema = new mongoose.Schema({
   },
   phone: String,
   avatar: String,
+  // User accept friend with whom
+  friendList: [
+    {
+      user_id: String,
+      room_chat_id: String
+    }
+  ],
+  // User that send friend 
+  acceptFriend: Array,
+  // User this send friend
+  requestFriend: Array,
   status: {
     type: String,
     default: "active"
@@ -23,7 +34,7 @@ const userSchema = new mongoose.Schema({
   },
   deleteAt: Date
 }, {
-  timestamps:true
+  timestamps: true
 });
 
 const User = mongoose.model("User", userSchema, "users");

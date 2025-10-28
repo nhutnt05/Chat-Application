@@ -1,8 +1,10 @@
 const userMiddleware = require("../../middlewares/client/user.middleware");
 //import route of product
 const homeRoutes = require("./home.route");
-const UserRoutes = require("./user.route");
+const userRoutes = require("./user.route");
 const chatRoutes = require("./chat.route");
+const usersRoutes = require("./users.route");
+
 const authMiddleware = require("../../middlewares/client/auth.middleware");
 
 module.exports = (app) => {
@@ -12,9 +14,10 @@ module.exports = (app) => {
 
   app.use('/', homeRoutes);
 
-  app.use('/user', UserRoutes);
+  app.use('/user', userRoutes);
+
 
   app.use('/chat', authMiddleware.requireAuth, chatRoutes);
 
-
+  app.use('/users', authMiddleware.requireAuth, usersRoutes);
 }
