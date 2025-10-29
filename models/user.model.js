@@ -21,9 +21,9 @@ const userSchema = new mongoose.Schema({
     }
   ],
   // User that send friend 
-  acceptFriend: Array,
+  acceptFriends: Array,
   // User this send friend
-  requestFriend: Array,
+  requestFriends: Array,
   status: {
     type: String,
     default: "active"
