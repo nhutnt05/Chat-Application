@@ -65,3 +65,16 @@ if (listAcceptFriend.length > 0) {
   });
 }
 // End Accepted Add Friend
+
+// server_return_length_accept_friend
+socket.on("server_return_length_accept_friend", (data) => {
+  const badgeLengthAccept = document.querySelector("[badge-accept]");
+  const userId = badgeLengthAccept.getAttribute("badge-accept");
+
+  console.log(userId)
+  if (data.userId == userId) {
+    badgeLengthAccept.innerHTML = data.lengthAcceptFriends;
+  }
+
+});
+// End server_return_length_accept_friend

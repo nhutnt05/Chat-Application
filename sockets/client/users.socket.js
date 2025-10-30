@@ -36,6 +36,17 @@ module.exports = async (res) => {
           $push: { requestFriends: userId }
         })
       }
+      // Get length acceptFriends userId return userId
+      const infoUser = await User.findOne({
+        _id: userId
+      });
+
+      const lengthAcceptFriends = infoUser.acceptFriends.length;
+
+      socket.broadcast.emit("server_return_length_accept_friend", {
+        userId: userId,
+        lengthAcceptFriends: lengthAcceptFriends
+      });
 
 
     });
