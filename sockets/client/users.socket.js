@@ -40,7 +40,7 @@ module.exports = async (res) => {
 
     });
 
-     // User send cancel friend request
+    // User send cancel friend request
     socket.on("client_cancel_friend", async (userId) => {
       // userId of friend to add
 
@@ -116,6 +116,58 @@ module.exports = async (res) => {
 
     });
 
+    // User accept friend request
+    socket.on("client_accept_friend", async (userId) => {
+      // userId of friend to refuse
+
+      // myIdUser is id of myuser
+      const myIdUser = res.locals.user.id;
+
+
+      // Add user_id of userId into friendList of myIdUser
+      // Remove userId from acceptFriends of myIdUser
+      const exitUserMytoYou = await User.findOne({
+        _id: myIdUser,
+        acceptFriends: userId
+      });
+
+      if (exitUserMytoYou) {
+        await User.updateOne({
+          _id: myIdUser
+        }, {
+          $push: {
+            friendList: {
+              user_id: userId,
+              room_chat_id: ""
+            }
+          },
+          $pull: { acceptFriends: userId }
+        })
+      }
+
+      // Add user_id of myIdUser into friendList of userId
+      // Remove myIdUser to requestFriends of userId
+      const exitUserYoutoMy = await User.findOne({
+        _id: userId,
+        requestFriends: myIdUser
+      });
+
+      if (exitUserYoutoMy) {
+        await User.updateOne({
+          _id: userId
+        }, {
+          $push: {
+            friendList: {
+              user_id: myIdUser,
+              room_chat_id: ""
+            }
+          },
+          $pull: { requestFriends: myIdUser }
+        })
+      }
+
+
+    });
 
 
   });

@@ -1,8 +1,8 @@
 // Add Friend 
-const listBtnAddFriend = document.querySelectorAll("[btn-add-friend]");
+const listAddFriend = document.querySelectorAll("[btn-add-friend]");
 
-if (listBtnAddFriend.length > 0) {
-  listBtnAddFriend.forEach((btn) => {
+if (listAddFriend.length > 0) {
+  listAddFriend.forEach((btn) => {
     btn.addEventListener("click", function () {
 
       btn.closest(".box-user").classList.add("add");
@@ -16,10 +16,10 @@ if (listBtnAddFriend.length > 0) {
 // End Add Friend
 
 // Cancel add Friend 
-const listBtnCancelFriend = document.querySelectorAll("[btn-cancel-friend]");
+const listCancelFriend = document.querySelectorAll("[btn-cancel-friend]");
 
-if (listBtnCancelFriend.length > 0) {
-  listBtnCancelFriend.forEach((btn) => {
+if (listCancelFriend.length > 0) {
+  listCancelFriend.forEach((btn) => {
     btn.addEventListener("click", function () {
 
       btn.closest(".box-user").classList.remove("add");
@@ -48,3 +48,20 @@ if (listRefuseFriend.length > 0) {
   });
 }
 // End Refuse Add Friend
+
+// Accept add Friend 
+const listAcceptFriend = document.querySelectorAll("[btn-accept-friend]");
+
+if (listAcceptFriend.length > 0) {
+  listAcceptFriend.forEach((btn) => {
+    btn.addEventListener("click", function () {
+
+      btn.closest(".box-user").classList.add("accepted");
+
+      const userId = btn.getAttribute("btn-accept-friend");
+
+      socket.emit("client_accept_friend", userId);
+    });
+  });
+}
+// End Accepted Add Friend
