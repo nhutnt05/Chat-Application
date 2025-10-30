@@ -36,6 +36,7 @@ module.exports = async (res) => {
           $push: { requestFriends: userId }
         })
       }
+
       // Get length acceptFriends userId return userId
       const infoUser = await User.findOne({
         _id: userId
@@ -48,10 +49,9 @@ module.exports = async (res) => {
         lengthAcceptFriends: lengthAcceptFriends
       });
 
-
     });
 
-    // User send cancel friend request
+    // User cancel friend request
     socket.on("client_cancel_friend", async (userId) => {
       // userId of friend to add
 
@@ -85,6 +85,20 @@ module.exports = async (res) => {
           $pull: { requestFriends: userId }
         })
       }
+
+      // Get length Accept userId
+      const infoUser = await User.findOne({
+        _id: userId,
+      });
+
+      const lengthAcceptFriends = infoUser.acceptFriends.length;
+
+      socket.broadcast.emit("server_return_length_accept_friend", {
+        userId: userId,
+        lengthAcceptFriends: lengthAcceptFriends
+      })
+
+
 
 
     });
@@ -179,7 +193,6 @@ module.exports = async (res) => {
 
 
     });
-
 
   });
 }
