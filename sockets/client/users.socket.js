@@ -78,6 +78,44 @@ module.exports = async (res) => {
 
     });
 
+    // User refuse friend request
+    socket.on("client_refuse_friend", async (userId) => {
+      // userId of friend to refuse
+
+      // myIdUser is id of myuser
+      const myIdUser = res.locals.user.id;
+
+      // Remove userId from acceptFriends of myIdUser
+      const exitUserMytoYou = await User.findOne({
+        _id: myIdUser,
+        acceptFriends: userId
+      });
+
+      if (exitUserMytoYou) {
+        await User.updateOne({
+          _id: myIdUser
+        }, {
+          $pull: { acceptFriends: userId }
+        })
+      }
+
+      // Remove myIdUser to requestFriends of userId
+      const exitUserYoutoMy = await User.findOne({
+        _id: userId,
+        requestFriends: myIdUser
+      });
+
+      if (exitUserYoutoMy) {
+        await User.updateOne({
+          _id: userId
+        }, {
+          $pull: { requestFriends: myIdUser }
+        })
+      }
+
+
+    });
+
 
 
   });

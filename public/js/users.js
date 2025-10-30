@@ -31,3 +31,20 @@ if (listBtnCancelFriend.length > 0) {
   });
 }
 // End Cancel Add Friend
+
+// Refuse add Friend 
+const listRefuseFriend = document.querySelectorAll("[btn-refuse-friend]");
+
+if (listRefuseFriend.length > 0) {
+  listRefuseFriend.forEach((btn) => {
+    btn.addEventListener("click", function () {
+
+      btn.closest(".box-user").classList.add("refuse");
+
+      const userId = btn.getAttribute("btn-refuse-friend");
+
+      socket.emit("client_refuse_friend", userId);
+    });
+  });
+}
+// End Refuse Add Friend
