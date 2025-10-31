@@ -49,6 +49,16 @@ module.exports = async (res) => {
         lengthAcceptFriends: lengthAcceptFriends
       });
 
+         // Get info of myUserId for UserId(info data accept) ( A for B)
+      const infoMyUserId = await User.findOne({
+        _id: myIdUser
+      }).select("id avatar fullName")
+
+      socket.broadcast.emit("server_return_info_accept_friend",{
+        userId: userId,
+        infoMyUserId: infoMyUserId
+      })
+
     });
 
     // User cancel friend request

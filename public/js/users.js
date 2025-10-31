@@ -78,3 +78,69 @@ socket.on("server_return_length_accept_friend", (data) => {
 
 });
 // End server_return_length_accept_friend
+
+// server_return_info_accept_friend
+socket.on("server_return_info_accept_friend", (data) => {
+  const infoUserAccept = document.querySelector("[data-infoUser-accept]");
+  const userId = infoUserAccept.getAttribute("data-infoUser-accept");
+
+  if (userId == data.userId) {
+    // Draw useraccept out interface 
+    const newBoxInfo = document.createElement("div");
+    newBoxInfo.classList.add("col-6");
+    newBoxInfo.setAttribute("user-id", data.infoMyUserId._id);
+
+    newBoxInfo.innerHTML = `
+        <div class="box-user">
+          <div class="inner-avatar">
+            <img src="/images/avatar.jpg" alt="${data.infoMyUserId.fullName}">
+          </div>
+          <div class="inner-info">
+            <div class="inner-name"> 
+              ${data.infoMyUserId.fullName}
+            </div>
+            <div class="inner-buttons">
+            <button class="btn btn-sm btn-primary mr-1" btn-accept-friend=${data.infoMyUserId._id}>
+              Xác nhận
+            </button><button class="btn btn-sm btn-secondary mr-1" btn-refuse-friend=${data.infoMyUserId._id}>
+              Xóa
+            </button>
+            <button class="btn btn-sm btn-secondary mr-1" btn-deleted-friend="" disabled="">
+              Đã xóa yêu cầu           
+            </button>
+            <button class="btn btn-sm btn-secondary mr-1" btn-accepted-friend="" disabled="">
+              Đã chấp nhận lời mời...
+            </button>
+            </div>
+          </div>
+        </div>
+    `;
+
+    infoUserAccept.appendChild(newBoxInfo);
+    // End Draw useraccept out interface 
+
+    // Remove accept friend request 
+    const buttonRefuseFriend = newBoxInfo.querySelector("[btn-refuse-friend]");
+    buttonRefuseFriend.addEventListener("click", () => {
+      buttonRefuseFriend.closest(".box-user").classList.add("refuse");
+
+      const userId = buttonRefuseFriend.getAttribute("btn-refuse-friend");
+
+      socket.emit("client_refuse_friend", userId);
+    });
+    // End Remove friend request 
+
+    // Accept add friend request
+    const buttonAcceptFriend = newBoxInfo.querySelector("[btn-accept-friend]");
+    buttonAcceptFriend.addEventListener("click", () => {
+      buttonAcceptFriend.closest(".box-user").classList.add("accepted");
+
+      const userId = buttonAcceptFriend.getAttribute("btn-accept-friend");
+      socket.emit("client_accept_friend", userId);
+    });
+    // End Accept add friend request
+
+
+  }
+});
+// end server_return_info_accept_friend
