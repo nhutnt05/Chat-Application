@@ -54,7 +54,7 @@ module.exports = async (res) => {
         _id: myIdUser
       }).select("id avatar fullName")
 
-      socket.broadcast.emit("server_return_info_accept_friend",{
+      socket.broadcast.emit("server_return_info_accept_friend", {
         userId: userId,
         infoMyUserId: infoMyUserId
       })
@@ -110,7 +110,7 @@ module.exports = async (res) => {
       // Get id of myUserId send userId 
       socket.broadcast.emit("server_return_user_id_cancel_friend", {
         userId: userId,
-        myIdUser:myIdUser
+        myIdUser: myIdUser
       });
 
     });
@@ -155,7 +155,7 @@ module.exports = async (res) => {
 
     // User accept friend request
     socket.on("client_accept_friend", async (userId) => {
-      // userId of friend to refuse
+      // userId of friend to accept
 
       // myIdUser is id of myuser
       const myIdUser = res.locals.user.id;
@@ -203,7 +203,11 @@ module.exports = async (res) => {
         })
       }
 
-
+      socket.broadcast.emit("server_return_accept_no_friend", {
+        userId: userId,
+        myIdUser: myIdUser
+      });
+      
     });
 
   });

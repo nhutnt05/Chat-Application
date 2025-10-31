@@ -81,16 +81,18 @@ socket.on("server_return_length_accept_friend", (data) => {
 
 // server_return_info_accept_friend
 socket.on("server_return_info_accept_friend", (data) => {
+  // Page users/accept
   const infoUserAccept = document.querySelector("[data-infoUser-accept]");
-  const userId = infoUserAccept.getAttribute("data-infoUser-accept");
+  if (infoUserAccept) {
+    const userId = infoUserAccept.getAttribute("data-infoUser-accept");
 
-  if (userId == data.userId) {
-    // Draw useraccept out interface 
-    const newBoxInfo = document.createElement("div");
-    newBoxInfo.classList.add("col-6");
-    newBoxInfo.setAttribute("user-id", data.infoMyUserId._id);
+    if (userId == data.userId) {
+      // Draw useraccept out interface 
+      const newBoxInfo = document.createElement("div");
+      newBoxInfo.classList.add("col-6");
+      newBoxInfo.setAttribute("user-id", data.infoMyUserId._id);
 
-    newBoxInfo.innerHTML = `
+      newBoxInfo.innerHTML = `
         <div class="box-user">
           <div class="inner-avatar">
             <img src="/images/avatar.jpg" alt="${data.infoMyUserId.fullName}">
@@ -116,32 +118,51 @@ socket.on("server_return_info_accept_friend", (data) => {
         </div>
     `;
 
-    infoUserAccept.appendChild(newBoxInfo);
-    // End Draw useraccept out interface 
+      infoUserAccept.appendChild(newBoxInfo);
+      // End Draw useraccept out interface 
 
-    // Remove accept friend request 
-    const buttonRefuseFriend = newBoxInfo.querySelector("[btn-refuse-friend]");
-    buttonRefuseFriend.addEventListener("click", () => {
-      buttonRefuseFriend.closest(".box-user").classList.add("refuse");
+      // Remove accept friend request 
+      const buttonRefuseFriend = newBoxInfo.querySelector("[btn-refuse-friend]");
+      buttonRefuseFriend.addEventListener("click", () => {
+        buttonRefuseFriend.closest(".box-user").classList.add("refuse");
 
-      const userId = buttonRefuseFriend.getAttribute("btn-refuse-friend");
+        const userId = buttonRefuseFriend.getAttribute("btn-refuse-friend");
 
-      socket.emit("client_refuse_friend", userId);
-    });
-    // End Remove friend request 
+        socket.emit("client_refuse_friend", userId);
+      });
+      // End Remove friend request 
 
-    // Accept add friend request
-    const buttonAcceptFriend = newBoxInfo.querySelector("[btn-accept-friend]");
-    buttonAcceptFriend.addEventListener("click", () => {
-      buttonAcceptFriend.closest(".box-user").classList.add("accepted");
+      // Accept add friend request
+      const buttonAcceptFriend = newBoxInfo.querySelector("[btn-accept-friend]");
+      buttonAcceptFriend.addEventListener("click", () => {
+        buttonAcceptFriend.closest(".box-user").classList.add("accepted");
 
-      const userId = buttonAcceptFriend.getAttribute("btn-accept-friend");
-      socket.emit("client_accept_friend", userId);
-    });
-    // End Accept add friend request
+        const userId = buttonAcceptFriend.getAttribute("btn-accept-friend");
+        socket.emit("client_accept_friend", userId);
+      });
+      // End Accept add friend request
 
 
+    }
   }
+  // End Page users/accept
+
+  // Page users/not-friend
+  const userNotFriend = document.querySelector("[users-not-friend]");
+
+  if (userNotFriend) {
+    const userId = userNotFriend.getAttribute("users-not-friend");
+
+    if (userId == data.userId) {
+      const boxRemoveUser = userNotFriend.querySelector(`[user-id = "${data.infoMyUserId._id}"]`);
+      if (boxRemoveUser) {
+        userNotFriend.removeChild(boxRemoveUser);
+      }
+
+    }
+  }
+  // End Page users/not-friend
+
 });
 // end server_return_info_accept_friend
 
@@ -160,3 +181,17 @@ socket.on("server_return_user_id_cancel_friend", (data) => {
 
 });
 // End server_return_user_id_cancel_friend
+
+// server_return_accept_no_friend
+socket.on("server_return_accept_no_friend", (data) => {
+  const boxnotFriend = document.querySelector("[users-not-friend]");
+  if (boxnotFriend) {
+    const userId = boxnotFriend.getAttribute("users-not-friend");
+    if (userId == data.userId) {
+      const boxAcceptUser = boxnotFriend.querySelector(`[user-id = "${data.myIdUser}"]`);
+      boxnotFriend.removeChild(boxAcceptUser);
+    }
+  }
+});
+
+// End server_return_accept_no_friend
