@@ -8,6 +8,8 @@ module.exports = async (req, res) => {
   const roomChatId = req.params.roomChatId;
 
   _io.once("connection", (socket) => {
+    socket.join(roomChatId);
+    
     // Listen client send message(object data)
     socket.on("client_send_message", async (data) => {
       let images = [];
@@ -26,7 +28,7 @@ module.exports = async (req, res) => {
       await newChat.save();
 
       // Return data to the clients(Return Realtime)-objects
-      _io.emit("server_return_message", {
+      _io.to(roomChatId).emit("server_return_message", {
         user_id: userId,
         fullName: fullName,
         content: data.content,
@@ -35,7 +37,7 @@ module.exports = async (req, res) => {
     });
 
     socket.on("client_send_typing", (type) => {
-      socket.broadcast.emit("server_return_typing", {
+      socket.broadcast.to(roomChatId).emit("server_return_typing", {
         user_id: userId,
         fullName: fullName,
         type: type,
