@@ -12,11 +12,11 @@ module.exports = (app) => {
 
   app.use(userMiddleware.infoUser);
 
-  app.use('/', homeRoutes);
+  app.use("/", homeRoutes);
 
-  app.use('/user', userRoutes);
+  app.use("/user", userRoutes);
 
-  app.use('/chat', authMiddleware.requireAuth, chatRoutes);
+  app.use("/messages", authMiddleware.requireAuth, chatRoutes);
 
-  app.use('/users', authMiddleware.requireAuth, usersRoutes);
-}
+  app.use("/users", authMiddleware.requireAuth, usersRoutes);
+};

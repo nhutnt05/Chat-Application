@@ -1,6 +1,6 @@
 const User = require("../../models/user.model");
 
-const socketUsers = require('../../sockets/client/users.socket');
+const socketUsers = require("../../sockets/client/users.socket");
 // [GET] /users/not-friend
 module.exports.notFriend = async (req, res) => {
   // Socket
@@ -14,7 +14,7 @@ module.exports.notFriend = async (req, res) => {
   const requestFriends = myUser.requestFriends;
 
   const friendId = [];
-  myUser.friendList.forEach(item => {
+  myUser.friendList.forEach((item) => {
     friendId.push(item.user_id);
   });
 
@@ -24,19 +24,17 @@ module.exports.notFriend = async (req, res) => {
       { _id: { $ne: userId } },
       { _id: { $nin: requestFriends } },
       { _id: { $nin: acceptFriends } },
-      {_id:  { $nin: friendId}}
+      { _id: { $nin: friendId } },
     ],
     status: "active",
     deleted: false,
-   
   }).select("avatar fullName");
-
 
   res.render("client/pages/users/not-friend", {
     pageTitle: "Danh sách người dùng",
-    users: users
+    users: users,
   });
-}
+};
 
 // [GET] /users/request
 module.exports.request = async (req, res) => {
@@ -47,7 +45,7 @@ module.exports.request = async (req, res) => {
   const userId = res.locals.user.id;
 
   const myUser = await User.findOne({
-    _id: userId
+    _id: userId,
   });
 
   const requestFriends = myUser.requestFriends;
@@ -55,14 +53,14 @@ module.exports.request = async (req, res) => {
   const users = await User.find({
     _id: { $in: requestFriends },
     status: "active",
-    deleted: false
+    deleted: false,
   }).select("id avatar fullName");
 
   res.render("client/pages/users/request", {
     pageTitle: "Lời mời đã gửi",
-    users: users
+    users: users,
   });
-}
+};
 
 // [GET] /users/accept
 module.exports.accept = async (req, res) => {
@@ -73,7 +71,7 @@ module.exports.accept = async (req, res) => {
   const userId = res.locals.user.id;
 
   const myUser = await User.findOne({
-    _id: userId
+    _id: userId,
   });
 
   const acceptFriend = myUser.acceptFriends;
@@ -81,15 +79,14 @@ module.exports.accept = async (req, res) => {
   const users = await User.find({
     _id: { $in: acceptFriend },
     status: "active",
-    deleted: false
+    deleted: false,
   }).select("id avatar fullName");
 
   res.render("client/pages/users/accept", {
     pageTitle: "Lời mời kết bạn",
-    users: users
+    users: users,
   });
-
-}
+};
 
 // [GET] /users/friends
 module.exports.friends = async (req, res) => {
@@ -100,21 +97,26 @@ module.exports.friends = async (req, res) => {
   const userId = res.locals.user.id;
 
   const myUser = await User.findOne({
-    _id: userId
+    _id: userId,
   });
 
   const friendList = myUser.friendList;
-  const friendId = friendList.map(item => item.user_id);
+  const friendId = friendList.map((item) => item.user_id);
 
   const users = await User.find({
     _id: { $in: friendId },
     status: "active",
-    deleted: false
+    deleted: false,
   }).select("id avatar fullName statusOnline");
+
+  users.forEach((user) => {
+    // Get info list friend
+    const infoUser = friendList.find((item) => item.user_id == user.id);
+    user.roomChatId = infoUser.room_chat_id;
+  });
 
   res.render("client/pages/users/friends", {
     pageTitle: "Danh sách bạn bè",
-    users: users
+    users: users,
   });
-
-}
+};
