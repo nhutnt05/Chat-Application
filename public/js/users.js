@@ -71,7 +71,7 @@ socket.on("server_return_length_accept_friend", (data) => {
   const badgeLengthAccept = document.querySelector("[badge-accept]");
   const userId = badgeLengthAccept.getAttribute("badge-accept");
 
-  console.log(userId)
+
   if (data.userId == userId) {
     badgeLengthAccept.innerHTML = data.lengthAcceptFriends;
   }
@@ -144,3 +144,19 @@ socket.on("server_return_info_accept_friend", (data) => {
   }
 });
 // end server_return_info_accept_friend
+
+// server_return_user_id_cancel_friend
+socket.on("server_return_user_id_cancel_friend", (data) => {
+  const dataUserAccept = document.querySelector("[data-infoUser-accept]");
+  const userId = dataUserAccept.getAttribute("data-infoUser-accept");
+
+  if (userId == data.userId) {
+    // Remove user cancel request in list accept page
+    const userRemove = dataUserAccept.querySelector(`[user-id ="${data.myIdUser}"]`);
+    if (userRemove) {
+      dataUserAccept.removeChild(userRemove);
+    }
+  }
+
+});
+// End server_return_user_id_cancel_friend
