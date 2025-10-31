@@ -1,7 +1,8 @@
 const User = require("../../models/user.model");
+const RoomChat = require("../../models/room-chat.model");
 
 module.exports = async (res) => {
-  _io.once('connection', (socket) => {
+  _io.once("connection", (socket) => {
     // User send add friend request
     socket.on("client_add_friend", async (userId) => {
       // userId of friend to add
@@ -9,55 +10,61 @@ module.exports = async (res) => {
       // myIdUser is id of myuser
       const myIdUser = res.locals.user.id;
 
-      // Add myIduser to acceptFriends of that userId 
+      // Add myIduser to acceptFriends of that userId
       const exitUserMytoYou = await User.findOne({
         _id: userId,
-        acceptFriends: myIdUser
+        acceptFriends: myIdUser,
       });
 
       if (!exitUserMytoYou) {
-        await User.updateOne({
-          _id: userId
-        }, {
-          $push: { acceptFriends: myIdUser }
-        })
+        await User.updateOne(
+          {
+            _id: userId,
+          },
+          {
+            $push: { acceptFriends: myIdUser },
+          }
+        );
       }
 
       // Add userId to requestFriends of myIdUser
       const exitUserYoutoMy = await User.findOne({
         _id: myIdUser,
-        requestFriends: userId
+        requestFriends: userId,
       });
 
       if (!exitUserYoutoMy) {
-        await User.updateOne({
-          _id: myIdUser
-        }, {
-          $push: { requestFriends: userId }
-        })
+        await User.updateOne(
+          {
+            _id: myIdUser,
+          },
+          {
+            $push: { requestFriends: userId },
+          }
+        );
       }
 
       // Get length acceptFriends userId return userId
       const infoUser = await User.findOne({
-        _id: userId
+        _id: userId,
       });
 
       const lengthAcceptFriends = infoUser.acceptFriends.length;
 
       socket.broadcast.emit("server_return_length_accept_friend", {
         userId: userId,
-        lengthAcceptFriends: lengthAcceptFriends
+        lengthAcceptFriends: lengthAcceptFriends,
       });
 
       // Get info of myUserId for UserId(info data accept) ( A for B)
       const infoMyUserId = await User.findOne({
-        _id: myIdUser
-      }).select("id avatar fullName")
+        _id: myIdUser,
+      }).select("id avatar fullName");
 
       socket.broadcast.emit("server_return_info_accept_friend", {
         userId: userId,
-        infoMyUserId: infoMyUserId
-      })
+        infoMyUserId: infoMyUserId,
+      });
     });
 
     // User cancel friend request
@@ -70,29 +77,35 @@ module.exports = async (res) => {
       // Remove myIdUser from acceptFriends of userId
       const exitUserMytoYou = await User.findOne({
         _id: userId,
-        acceptFriends: myIdUser
+        acceptFriends: myIdUser,
       });
 
       if (exitUserMytoYou) {
-        await User.updateOne({
-          _id: userId
-        }, {
-          $pull: { acceptFriends: myIdUser }
-        })
+        await User.updateOne(
+          {
+            _id: userId,
+          },
+          {
+            $pull: { acceptFriends: myIdUser },
+          }
+        );
       }
 
       // Remove userId to requestFriends of myIdUser
       const exitUserYoutoMy = await User.findOne({
         _id: myIdUser,
-        requestFriends: userId
+        requestFriends: userId,
       });
 
       if (exitUserYoutoMy) {
-        await User.updateOne({
-          _id: myIdUser
-        }, {
-          $pull: { requestFriends: userId }
-        })
+        await User.updateOne(
+          {
+            _id: myIdUser,
+          },
+          {
+            $pull: { requestFriends: userId },
+          }
+        );
       }
 
       // Get length Accept userId
@@ -104,15 +117,14 @@ module.exports = async (res) => {
 
       socket.broadcast.emit("server_return_length_accept_friend", {
         userId: userId,
-        lengthAcceptFriends: lengthAcceptFriends
+        lengthAcceptFriends: lengthAcceptFriends,
       });
 
-      // Get id of myUserId send userId 
+      // Get id of myUserId send userId
       socket.broadcast.emit("server_return_user_id_cancel_friend", {
         userId: userId,
-        myIdUser: myIdUser
+        myIdUser: myIdUser,
       });
-
     });
 
     // User refuse friend request
@@ -125,32 +137,36 @@ module.exports = async (res) => {
       // Remove userId from acceptFriends of myIdUser
       const exitUserMytoYou = await User.findOne({
         _id: myIdUser,
-        acceptFriends: userId
+        acceptFriends: userId,
       });
 
       if (exitUserMytoYou) {
-        await User.updateOne({
-          _id: myIdUser
-        }, {
-          $pull: { acceptFriends: userId }
-        })
+        await User.updateOne(
+          {
+            _id: myIdUser,
+          },
+          {
+            $pull: { acceptFriends: userId },
+          }
+        );
       }
 
       // Remove myIdUser to requestFriends of userId
       const exitUserYoutoMy = await User.findOne({
         _id: userId,
-        requestFriends: myIdUser
+        requestFriends: myIdUser,
       });
 
       if (exitUserYoutoMy) {
-        await User.updateOne({
-          _id: userId
-        }, {
-          $pull: { requestFriends: myIdUser }
-        })
+        await User.updateOne(
+          {
+            _id: userId,
+          },
+          {
+            $pull: { requestFriends: myIdUser },
+          }
+        );
       }
-
-
     });
 
     // User accept friend request
@@ -160,55 +176,80 @@ module.exports = async (res) => {
       // myIdUser is id of myuser
       const myIdUser = res.locals.user.id;
 
+      // Get userExist
+      const exitUserMytoYou = await User.findOne({
+        _id: myIdUser,
+        acceptFriends: userId,
+      });
+      const exitUserYoutoMy = await User.findOne({
+        _id: userId,
+        requestFriends: myIdUser,
+      });
+
+      let roomChat;
+      // Create Room Chat
+      if (exitUserMytoYou && exitUserYoutoMy) {
+        roomChat = new RoomChat({
+          typeRoom: "friend",
+          users: [
+            {
+              user_id: userId,
+              role: "superAdmin",
+            },
+            {
+              user_id: myIdUser,
+              role: "superAdmin",
+            },
+          ],
+        });
+
+        await roomChat.save();
+      }
 
       // Add user_id of userId into friendList of myIdUser
       // Remove userId from acceptFriends of myIdUser
-      const exitUserMytoYou = await User.findOne({
-        _id: myIdUser,
-        acceptFriends: userId
-      });
 
       if (exitUserMytoYou) {
-        await User.updateOne({
-          _id: myIdUser
-        }, {
-          $push: {
-            friendList: {
-              user_id: userId,
-              room_chat_id: ""
-            }
+        await User.updateOne(
+          {
+            _id: myIdUser,
           },
-          $pull: { acceptFriends: userId }
-        })
+          {
+            $push: {
+              friendList: {
+                user_id: userId,
+                room_chat_id: roomChat.id,
+              },
+            },
+            $pull: { acceptFriends: userId },
+          }
+        );
       }
 
       // Add user_id of myIdUser into friendList of userId
       // Remove myIdUser to requestFriends of userId
-      const exitUserYoutoMy = await User.findOne({
-        _id: userId,
-        requestFriends: myIdUser
-      });
 
       if (exitUserYoutoMy) {
-        await User.updateOne({
-          _id: userId
-        }, {
-          $push: {
-            friendList: {
-              user_id: myIdUser,
-              room_chat_id: ""
-            }
+        await User.updateOne(
+          {
+            _id: userId,
           },
-          $pull: { requestFriends: myIdUser }
-        })
+          {
+            $push: {
+              friendList: {
+                user_id: myIdUser,
+                room_chat_id: roomChat.id,
+              },
+            },
+            $pull: { requestFriends: myIdUser },
+          }
+        );
       }
 
       socket.broadcast.emit("server_return_accept_no_friend", {
         userId: userId,
-        myIdUser: myIdUser
+        myIdUser: myIdUser,
       });
-      
     });
-
   });
-}
+};
