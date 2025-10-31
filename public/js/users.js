@@ -195,3 +195,25 @@ socket.on("server_return_accept_no_friend", (data) => {
 });
 
 // End server_return_accept_no_friend
+
+// server_return_user_online
+socket.on("server_return_user_online", (userId) => {
+  const usersFriend = document.querySelector("[users-friend]");
+  if(usersFriend){
+    const userOnline = usersFriend.querySelector(`[user-id="${userId}"]`);
+    if(userOnline){
+      userOnline.querySelector("[status]").setAttribute("status", "online");
+    }
+  }
+});
+// End server_return_user_online
+
+// server_return_user_offline
+ socket.on("server_return_user_offline", (userId)=> {
+  const usersFriend = document.querySelector("[users-friend]");
+  if(usersFriend){
+    const userOffline = usersFriend.querySelector(`[user-id="${userId}"]`);
+    userOffline.querySelector("[status]").setAttribute("status", "offline");
+  }
+ });
+//End  server_return_user_offline

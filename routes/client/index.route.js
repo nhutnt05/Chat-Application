@@ -16,7 +16,6 @@ module.exports = (app) => {
 
   app.use('/user', userRoutes);
 
-
   app.use('/chat', authMiddleware.requireAuth, chatRoutes);
 
   app.use('/users', authMiddleware.requireAuth, usersRoutes);
