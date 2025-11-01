@@ -13,16 +13,21 @@ header.header
               //- li 
               //-   a(href="/chat") Chat
               li 
-                a(href="/users/friends") Bạn bè
+                a(href="/users/friends")
+                  img(src="/images/friend.png" class="images-chat")
               li 
-                a(href="/rooms-chat") Phòng chat
-              li 
-                a(href="/user/info") #{user.fullName} 
-              li 
-                a(href="/user/logout") Đăng xuất
+                a(href="/rooms-chat") 
+                  img(src="/images/roomChat.png" class="images-chat")
+              ul.user-menu
+                li
+                  a.user-name(href="/user/info") #{user.fullName}
+                li
+                  a.logout-link(href="/user/logout") Đăng xuất
+
                          
             else
-              li 
-                a(href="/user/login") Đăng nhập
-              li 
-                a(href="/user/register") Đăng ký
+              ul.nav-links
+                li
+                  a.login(href="/user/login") Đăng nhập
+                li
+                  a.logout(href="/user/register") Đăng ký

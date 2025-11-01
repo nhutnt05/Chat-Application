@@ -7,33 +7,29 @@ block main
   .container.my-5
     .row.justify-content-center
       .col-8
-        h1(class="text-center") Đăng nhập tài khoản
-        form(
+        h1.login-title Đăng nhập tài khoản
+        form.login-form(
           action="/user/login"
           method="POST"
         )
-          div(class="form-group")
-            label(for="email") Email
+          div.form-group
+            label(for="email").form-label Email
             input(
               type="email"
-              class="form-control"
+              class="form-input"
               id="email"
               name="email"
               required
             )
-          div(class="form-group")
-            label(for="password") Mật khẩu
+          div.form-group
+            label(for="password").form-label Mật khẩu
             input(
               type="password"
-              class="form-control"
+              class="form-input"
               id="password"
               name="password"
               required
             )
-          div(class="form-group")
-            button(
-              type="submit"
-              class="btn btn-primary btn-block"
-            ) Đăng nhập
-
-        a(href="/user/password/forgot") Quên mật khẩu?
+          div.form-group
+            button(type="submit" class="form-button") Đăng nhập
+        a.forgot-link(href="/user/password/forgot") Quên mật khẩu?

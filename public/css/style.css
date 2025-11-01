@@ -25,12 +25,33 @@
 
 /* End Header */
 
+/* Home */
+.head {
+  color: #0084ff;
+  font-size: 50px;
+  font-weight: 600;
+  text-align: center;
+  margin: auto 0;
+}
+
+.description {
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+}
+
+/* End Home */
+
 /* Footer */
 .footer {
-  background: #333;
+  background: #0084ff;
   color: #fff;
   text-align: center;
   padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  
 }
 
 /* End Footer */
@@ -504,3 +525,286 @@
 }
 
 /* End box-room */
+
+
+/* images-room */
+.images-chat {
+  width: 50px;
+  height: 50px;
+  transition: all 0.3s ease;
+  /* Hiệu ứng hover mượt */
+  cursor: pointer;
+  /* Con trỏ tay khi hover */
+}
+
+
+/* End images-room */
+
+
+/* rooms-chat/create */
+/* Container form */
+.room-form {
+  max-width: 480px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #fefefe;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Form group spacing */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Label */
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+  font-size: 16px;
+}
+
+/* Input text */
+.form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.form-input:focus {
+  border-color: #0084ff;
+  box-shadow: 0 0 8px rgba(0,132,255,0.2);
+  outline: none;
+}
+
+/* Checkbox */
+.form-check {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.form-checkbox {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  accent-color: #0084ff; /* màu khi tick */
+}
+
+.form-checkbox-label {
+  font-size: 15px;
+  color: #555;
+}
+
+/* Submit button */
+.form-button {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-radius: 12px;
+  background-color: #0084ff;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.form-button:hover {
+  background-color: #006fcc;
+  box-shadow: 0 4px 12px rgba(0,132,255,0.3);
+}
+
+/* End rooms-chat/create */
+
+/* Login && Logout */
+/* Container ul */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px; /* khoảng cách giữa 2 link */
+  padding: 0;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Link cơ bản */
+.nav-links a {
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-block;
+  font-size: 15px;
+}
+
+/* Link Đăng nhập */
+.nav-links a.login {
+  color: #0084ff;
+  border: 2px solid #0084ff;
+  background-color: transparent;
+}
+
+.nav-links a.login:hover {
+  color: #fff;
+  background-color: #0084ff;
+  box-shadow: 0 4px 12px rgba(0,132,255,0.3);
+}
+
+/* Link Đăng ký */
+.nav-links a.logout {
+  color: #fff;
+  background-color: #28a745;
+  border: 2px solid #28a745;
+}
+
+.nav-links a.logout:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+  box-shadow: 0 4px 12px rgba(40,167,69,0.3);
+}
+
+/* End Login && Logout */
+
+/* Login system */
+/* Container */
+.col-8 {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 30px 25px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Title */
+.login-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 25px;
+  color: #333;
+  font-weight: 700;
+}
+
+/* Form group */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Labels */
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #555;
+  font-size: 15px;
+}
+
+/* Inputs */
+.form-input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  transition: all 0.3s;
+}
+
+.form-input:focus {
+  border-color: #0084ff;
+  box-shadow: 0 0 8px rgba(0,132,255,0.2);
+  outline: none;
+}
+
+/* Button */
+.form-button {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-radius: 12px;
+  background-color: #0084ff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.form-button:hover {
+  background-color: #006fcc;
+  box-shadow: 0 4px 12px rgba(0,132,255,0.3);
+}
+
+/* Link Quên mật khẩu */
+.forgot-link {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  color: #0084ff;
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.forgot-link:hover {
+  color: #006fcc;
+  text-decoration: underline;
+}
+
+/* End Login system*/
+
+/* Info User && logout system */
+/* Container ul */
+.user-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 15px; /* Khoảng cách giữa tên và đăng xuất */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  align-items: center;
+}
+
+/* Link chung */
+.user-menu a {
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: all 0.3s;
+  font-size: 15px;
+  display: inline-block;
+}
+
+/* Tên người dùng */
+.user-name {
+  color: #333;
+  font-weight: 600;
+}
+
+.user-name:hover {
+  background-color: #f0f0f0;
+}
+
+/* Link đăng xuất */
+.logout-link {
+  color: #fff;
+  background-color: #dc3545; /* đỏ */
+  border: 1px solid #dc3545;
+  font-weight: 600;
+}
+
+.logout-link:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+  box-shadow: 0 4px 10px rgba(220,53,69,0.3);
+}
+
+/* End Info User && logout system */

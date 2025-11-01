@@ -10,36 +10,32 @@ block main
     
     .row
       .col-12
-        form(
-          action="/rooms-chat/create"
-          method="POST"
+        form.room-form(
+        action="/rooms-chat/create"
+        method="POST"
         )
-          div(class="form-group")
-            label(for="title") Tiêu đề
+          div.form-group
+            label(for="title").form-label Tiêu đề
             input(
               type="text"
-              class="form-control"
+              class="form-input"
               id="title"
               name="title"
               required
             )
-          div(class="form-group")
-            label Thêm thành viên
+          div.form-group
+            label.form-label Thêm thành viên
             each user in friendList
-              div(class="form-check")
+              div.form-check
                 input(
-                  class="form-check-input"
+                  class="form-checkbox"
                   type="checkbox"
                   value=user.user_id
                   id=`user-${user.user_id}`
                   name="usersId"
                 )
-                label(
-                  class="form-check-label"
+                label.form-checkbox-label(
                   for=`user-${user.user_id}`
                 ) #{user.infoUserFriend.fullName}
-            div(class="form-group")
-              button(
-                type="submit"
-                class="btn btn-primary"
-              ) Tạo
+          div.form-group
+            button(type="submit" class="form-button") Tạo
