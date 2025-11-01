@@ -8,6 +8,11 @@ block main
     .row
       .col-12
         +box-head("Chat")
+        if(nameRoom)
+          div(
+            class="text-center text-primary fw-bold" 
+            style="font-size: 24px; font-weight: bold; color: #3E85FF"
+          ) #{nameRoom.title}
 
     .row
       .col-12

@@ -1,5 +1,6 @@
 const Chat = require("../../models/chat.model");
 const User = require("../../models/user.model");
+const RoomChat = require("../../models/room-chat.model");
 // const uploadToCloudinary = require('../../helpers/uploadToCloudinary');
 
 const socketChat = require("../../sockets/client/chat.socket");
@@ -24,8 +25,13 @@ module.exports.index = async (req, res) => {
     item.infoUser = infoUser;
   }
 
+  const nameRoom = await RoomChat.findOne({
+    _id: roomChatId
+  }).select("title");
+
   res.render("client/pages/chat/index", {
     pageTitle: "Chat",
     chats: chats,
+    nameRoom:nameRoom
   });
 };
