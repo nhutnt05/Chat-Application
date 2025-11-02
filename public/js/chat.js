@@ -33,6 +33,7 @@ if (formSendData) {
           images: images
         }
       );
+      
       e.target.elements.content.value = "";
       upload.resetPreviewPanel();
       // Hidden typing when send message

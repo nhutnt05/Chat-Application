@@ -182,8 +182,8 @@ socket.on("server_return_user_id_cancel_friend", (data) => {
 });
 // End server_return_user_id_cancel_friend
 
-// server_return_accept_no_friend
-socket.on("server_return_accept_no_friend", (data) => {
+// server_return_accept_friend
+socket.on("server_return_accept_friend", (data) => {
   const boxnotFriend = document.querySelector("[users-not-friend]");
   if (boxnotFriend) {
     const userId = boxnotFriend.getAttribute("users-not-friend");
@@ -193,15 +193,14 @@ socket.on("server_return_accept_no_friend", (data) => {
     }
   }
 });
-
-// End server_return_accept_no_friend
+// End server_return_accept_friend
 
 // server_return_user_online
 socket.on("server_return_user_online", (userId) => {
   const usersFriend = document.querySelector("[users-friend]");
-  if(usersFriend){
+  if (usersFriend) {
     const userOnline = usersFriend.querySelector(`[user-id="${userId}"]`);
-    if(userOnline){
+    if (userOnline) {
       userOnline.querySelector("[status]").setAttribute("status", "online");
     }
   }
@@ -209,11 +208,105 @@ socket.on("server_return_user_online", (userId) => {
 // End server_return_user_online
 
 // server_return_user_offline
- socket.on("server_return_user_offline", (userId)=> {
+socket.on("server_return_user_offline", (userId) => {
   const usersFriend = document.querySelector("[users-friend]");
-  if(usersFriend){
+  if (usersFriend) {
     const userOffline = usersFriend.querySelector(`[user-id="${userId}"]`);
     userOffline.querySelector("[status]").setAttribute("status", "offline");
   }
- });
+});
 //End  server_return_user_offline
+
+// // Unfriend
+// document.querySelectorAll('.inner-ellipsis').forEach(el => {
+//   const icon = el.querySelector('i');
+//   const box = el.querySelector('.inner-remove');
+
+
+//   icon.addEventListener('click', () => {
+//     box.classList.toggle('show');
+//   });
+
+//   // Click outside remove .show
+//   document.addEventListener('click', (e) => {
+//     if (!el.contains(e.target)) {
+//       box.classList.remove('show');
+//     }
+//   });
+
+//   box.addEventListener('click', () => {
+//     const unfriend = box.getAttribute("fullName");
+//     if (unfriend) {
+//       const confirmFriend = confirm(`Hủy kết bạn với ${unfriend}`);
+//       const userId = box.closest(".col-6").getAttribute("user-id");
+//       if (confirmFriend) {
+//         socket.emit("client_unfriend_server", userId)
+//       } else {
+//       }
+//     }
+
+//   })
+
+// });
+
+
+// // End Unfriend
+
+// Thêm CDN SweetAlert2 nếu chưa có
+// <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+document.querySelectorAll('.inner-ellipsis').forEach(el => {
+  const icon = el.querySelector('i');
+  const box = el.querySelector('.inner-remove');
+
+  // Toggle dropdown khi click icon
+  icon.addEventListener('click', (e) => {
+    e.stopPropagation(); // tránh click ngoài đóng ngay
+    box.classList.toggle('show');
+  });
+
+  // Click outside dropdown để ẩn
+  document.addEventListener('click', (e) => {
+    if (!el.contains(e.target)) {
+      box.classList.remove('show');
+    }
+  });
+
+  // Click Hủy kết bạn
+  box.addEventListener('click', () => {
+    const unfriend = box.dataset.fullName || box.getAttribute("fullName"); // lấy tên
+    const userId = box.closest(".col-6").getAttribute("user-id");
+
+    if (!unfriend) return;
+
+    // Hiển thị popup đẹp
+    Swal.fire({
+      title: `Hủy kết bạn với ${unfriend}?`,
+      text: `Bạn có chắc chắn muốn hủy kết bạn với ${unfriend} không?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Đồng ý',
+      cancelButtonText: 'Hủy',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Gửi sự kiện Socket.IO tới server
+        socket.emit("client_unfriend_server", userId);
+
+        // Ẩn dropdown
+        box.classList.remove('show');
+
+        // Hiển thị thông báo thành công nhỏ
+        Swal.fire({
+          title: 'Đã hủy kết bạn!',
+          icon: 'success',
+          timer: 1200,
+          showConfirmButton: false
+        });
+      }
+    });
+  });
+});
+

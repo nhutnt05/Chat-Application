@@ -19,6 +19,10 @@ block main
                 src=(user.avatar ? user.avatar : "/images/avatar.jpg" )
                 alt=user.fullName
                 )
+            div(
+              class="inner-status"
+              status = user.statusOnline
+            ) <i class="fa-solid fa-circle"></i>
             div(class="inner-info")
               div(class="inner-name") #{user.fullName}
               div(class="inner-buttons")
@@ -26,10 +30,22 @@ block main
                   href=`/messages/${user.roomChatId}`
                   class="btn btn-sm btn-primary mr-1"
                 ) Nhắn tin
+
             div(
-              class="inner-status"
-              status = user.statusOnline
-            ) <i class="fa-solid fa-circle"></i>
+              class="inner-ellipsis"
+            ) 
+              <i class="fa-solid fa-ellipsis"></i>
+              div(
+                class="inner-remove"
+                fullName=user.fullName
+                )
+                  .row 
+                    .col-3
+                      <i class="fa-solid fa-user-xmark"></i>
+                    .col-9
+                      span() Hủy kết bạn
+
+
           
 block script
   script( src="/js/users.js")

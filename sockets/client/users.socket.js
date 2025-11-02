@@ -246,10 +246,45 @@ module.exports = async (res) => {
         );
       }
 
-      socket.broadcast.emit("server_return_accept_no_friend", {
+      socket.broadcast.emit("server_return_accept_friend", {
         userId: userId,
         myIdUser: myIdUser,
       });
     });
+
+    // // User Unfriend
+    socket.on("client_unfriend_server", async (userId) => {
+
+      const myIdUser = res.locals.user.id;
+
+      const myUser = await User.findOne({
+        _id: myIdUser,
+        friendList: {
+          $elemMatch: { user_id: userId }
+        }
+      });
+   
+
+      const userFriend = await User.findOne({
+        _id: userId,
+        friendList: {
+          $elemMatch: { user_id: myIdUser }
+        }
+      });
+      
+
+      if (myUser && userFriend) {
+        await User.updateOne(
+          { _id: userId },
+          { $pull: { friendList: { user_id: myIdUser } } }
+        );
+
+        await User.updateOne(
+          { _id: myIdUser },
+          { $pull: { friendList: { user_id: userId } } }
+        );
+      }
+    });
   });
 };
+

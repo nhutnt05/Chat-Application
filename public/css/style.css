@@ -51,7 +51,7 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  
+
 }
 
 /* End Footer */
@@ -476,16 +476,28 @@
 }
 
 /* online */
+.inner-avatar {
+  position: relative;
+}
+
+
 .box-user .inner-status {
+  position: absolute;
   font-size: 12px;
   color: #00d800;
+  opacity: 0;
+  bottom: 44px;
+  left: 70px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #00d800;
   opacity: 0;
 }
 
 .box-user .inner-status[status="online"] {
   opacity: 1;
 }
-
 
 /* End box-user  */
 
@@ -549,7 +561,7 @@
   padding: 30px;
   background-color: #fefefe;
   border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -579,7 +591,7 @@
 
 .form-input:focus {
   border-color: #0084ff;
-  box-shadow: 0 0 8px rgba(0,132,255,0.2);
+  box-shadow: 0 0 8px rgba(0, 132, 255, 0.2);
   outline: none;
 }
 
@@ -594,7 +606,8 @@
   width: 18px;
   height: 18px;
   margin-right: 10px;
-  accent-color: #0084ff; /* màu khi tick */
+  accent-color: #0084ff;
+  /* màu khi tick */
 }
 
 .form-checkbox-label {
@@ -618,7 +631,7 @@
 
 .form-button:hover {
   background-color: #006fcc;
-  box-shadow: 0 4px 12px rgba(0,132,255,0.3);
+  box-shadow: 0 4px 12px rgba(0, 132, 255, 0.3);
 }
 
 /* End rooms-chat/create */
@@ -628,7 +641,8 @@
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 15px; /* khoảng cách giữa 2 link */
+  gap: 15px;
+  /* khoảng cách giữa 2 link */
   padding: 0;
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -655,7 +669,7 @@
 .nav-links a.login:hover {
   color: #fff;
   background-color: #0084ff;
-  box-shadow: 0 4px 12px rgba(0,132,255,0.3);
+  box-shadow: 0 4px 12px rgba(0, 132, 255, 0.3);
 }
 
 /* Link Đăng ký */
@@ -668,7 +682,7 @@
 .nav-links a.logout:hover {
   background-color: #218838;
   border-color: #1e7e34;
-  box-shadow: 0 4px 12px rgba(40,167,69,0.3);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
 }
 
 /* End Login && Logout */
@@ -681,7 +695,7 @@
   padding: 30px 25px;
   background-color: #fff;
   border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -720,7 +734,7 @@
 
 .form-input:focus {
   border-color: #0084ff;
-  box-shadow: 0 0 8px rgba(0,132,255,0.2);
+  box-shadow: 0 0 8px rgba(0, 132, 255, 0.2);
   outline: none;
 }
 
@@ -740,7 +754,7 @@
 
 .form-button:hover {
   background-color: #006fcc;
-  box-shadow: 0 4px 12px rgba(0,132,255,0.3);
+  box-shadow: 0 4px 12px rgba(0, 132, 255, 0.3);
 }
 
 /* Link Quên mật khẩu */
@@ -768,7 +782,8 @@
   padding: 0;
   margin: 0;
   display: flex;
-  gap: 15px; /* Khoảng cách giữa tên và đăng xuất */
+  gap: 15px;
+  /* Khoảng cách giữa tên và đăng xuất */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   align-items: center;
 }
@@ -796,7 +811,8 @@
 /* Link đăng xuất */
 .logout-link {
   color: #fff;
-  background-color: #dc3545; /* đỏ */
+  background-color: #dc3545;
+  /* đỏ */
   border: 1px solid #dc3545;
   font-weight: 600;
 }
@@ -804,7 +820,78 @@
 .logout-link:hover {
   background-color: #c82333;
   border-color: #bd2130;
-  box-shadow: 0 4px 10px rgba(220,53,69,0.3);
+  box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
 }
 
 /* End Info User && logout system */
+
+/* Remove Friend */
+.inner-ellipsis {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  padding: 20px;
+  padding-top: 10px;
+  padding-right: 10px;
+  font-size: 20px;
+}
+
+/* Box ẩn mặc định */
+.inner-remove {
+  display: none;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  padding: 8px 12px;
+  width: 160px;
+  transition: all 0.2s ease;
+  z-index: 100;
+}
+
+
+.inner-remove.show {
+  display: block;
+  animation: fadeIn 0.2s ease;
+}
+
+
+.inner-remove .row {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.inner-remove .col-4 {
+  flex: 1;
+  text-align: center;
+}
+
+.inner-remove i {
+  font-size: 15px;
+}
+
+.inner-remove span {
+  color: #333;
+  font-size: 15px;
+}
+
+
+/* Hiệu ứng fade */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* End Remove Friend */
