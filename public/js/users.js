@@ -204,6 +204,17 @@ socket.on("server_return_user_online", (userId) => {
       userOnline.querySelector("[status]").setAttribute("status", "online");
     }
   }
+
+  // Online in roomChat
+  const userItem = document.querySelector(`[users-room-chat] .user-item[user-id="${userId}"]`);
+  if (userItem) {
+    const statusDot = userItem.querySelector(".status-dot");
+    if (statusDot) {
+      statusDot.classList.remove("status-offline");
+      statusDot.classList.add("status-online");
+    }
+  }
+
 });
 // End server_return_user_online
 
@@ -213,6 +224,16 @@ socket.on("server_return_user_offline", (userId) => {
   if (usersFriend) {
     const userOffline = usersFriend.querySelector(`[user-id="${userId}"]`);
     userOffline.querySelector("[status]").setAttribute("status", "offline");
+  }
+
+  // Offline in roomChat
+  const userItem = document.querySelector(`[users-room-chat] .user-item[user-id="${userId}"]`);
+  if (userItem) {
+    const statusDot = userItem.querySelector(".status-dot");
+    if (statusDot) {
+      statusDot.classList.remove("status-online");
+      statusDot.classList.add("status-offline");
+    }
   }
 });
 //End  server_return_user_offline
@@ -249,12 +270,7 @@ socket.on("server_return_user_offline", (userId) => {
 
 // });
 
-
-// // End Unfriend
-
-// Thêm CDN SweetAlert2 nếu chưa có
-// <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+// Unfriend
 document.querySelectorAll('.inner-ellipsis').forEach(el => {
   const icon = el.querySelector('i');
   const box = el.querySelector('.inner-remove');
@@ -272,14 +288,14 @@ document.querySelectorAll('.inner-ellipsis').forEach(el => {
     }
   });
 
-  // Click Hủy kết bạn
+  // Click Unfriend
   box.addEventListener('click', () => {
     const unfriend = box.dataset.fullName || box.getAttribute("fullName"); // lấy tên
     const userId = box.closest(".col-6").getAttribute("user-id");
 
     if (!unfriend) return;
 
-    // Hiển thị popup đẹp
+    // Show popup
     Swal.fire({
       title: `Hủy kết bạn với ${unfriend}?`,
       text: `Bạn có chắc chắn muốn hủy kết bạn với ${unfriend} không?`,
@@ -292,13 +308,12 @@ document.querySelectorAll('.inner-ellipsis').forEach(el => {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        // Gửi sự kiện Socket.IO tới server
         socket.emit("client_unfriend_server", userId);
 
-        // Ẩn dropdown
+        // Hidden dropdown
         box.classList.remove('show');
 
-        // Hiển thị thông báo thành công nhỏ
+        // Display success message
         Swal.fire({
           title: 'Đã hủy kết bạn!',
           icon: 'success',
@@ -310,3 +325,31 @@ document.querySelectorAll('.inner-ellipsis').forEach(el => {
   });
 });
 
+
+
+// End Unfriend
+
+
+// Cập nhật trạng thái online
+socket.on("server_return_user_online", (userId) => {
+  const userItem = document.querySelector(`.user-item[user-id="${userId}"]`);
+  if (userItem) {
+    const statusDot = userItem.querySelector(".status-dot");
+    if (statusDot) {
+      statusDot.classList.remove("status-offline");
+      statusDot.classList.add("status-online");
+    }
+  }
+});
+
+// Cập nhật trạng thái offline
+socket.on("server_return_user_offline", (userId) => {
+  const userItem = document.querySelector(`.user-item[user-id="${userId}"]`);
+  if (userItem) {
+    const statusDot = userItem.querySelector(".status-dot");
+    if (statusDot) {
+      statusDot.classList.remove("status-online");
+      statusDot.classList.add("status-offline");
+    }
+  }
+});

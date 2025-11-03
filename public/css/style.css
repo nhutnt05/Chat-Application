@@ -480,16 +480,12 @@
   position: relative;
 }
 
-
 .box-user .inner-status {
   position: absolute;
-  font-size: 12px;
-  color: #00d800;
-  opacity: 0;
-  bottom: 44px;
+  top: 45%;
   left: 70px;
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background-color: #00d800;
   opacity: 0;
@@ -544,9 +540,9 @@
   width: 50px;
   height: 50px;
   transition: all 0.3s ease;
-  /* Hiệu ứng hover mượt */
+
   cursor: pointer;
-  /* Con trỏ tay khi hover */
+
 }
 
 
@@ -939,5 +935,42 @@
   font-size: 0.95rem;
   color: #333;
   font-weight: 500;
+    margin-left: 10px;
 }
+
+/* Wrapper để position relative */
+.avatar-wrapper {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+/* Avatar bo tròn */
+.avatar-wrapper img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+ 
+}
+
+/* Dấu chấm trạng thái */
+.status-online {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #fff; /* viền trắng xung quanh */
+  border-radius: 50%;
+  /* opacity: 0; */
+  background-color: #28a745;
+}
+
+/* Online: xanh */
+.user-online .status-dot[status="online"] {
+  
+  opacity: 1;
+}
+
 

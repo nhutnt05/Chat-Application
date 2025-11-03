@@ -66,12 +66,20 @@ block main
                 i.fa-solid.fa-paper-plane
       if(nameRoom.users.length > 2)
         .col-md-3.col-12
-                +box-head("Thành viên")
-                .user-sidebar
-                  ul.list-unstyled
-                    each u in nameRoom.users
-                      li.d-flex.align-items-center.mb-2
-                        span #{u.infoUser.fullName}
+          +box-head("Thành viên")
+          div(
+            class = "user-sidebar"
+            users-room-chat
+          )
+            ul.list-unstyled(users-room-chat)
+              each u in nameRoom.users
+                if(user.id != u.infoUser.id)
+                  li.d-flex.align-items-center.mb-2.user-item(user-id=u.infoUser.id)
+                    .avatar-wrapper.me-2.user-online
+                      img.rounded-circle(src='/images/avatar.jpg', alt='avatar', width='40', height='40')
+                      div.status-dot(class=(u.infoUser.statusOnline=="online" ? "status-online" : "status-offline"))
+                    span #{u.infoUser.fullName}
+
   div(class="tooltip" role="tooltip")           
     emoji-picker(class="light")
 
