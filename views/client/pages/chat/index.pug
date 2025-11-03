@@ -11,11 +11,11 @@ block main
         if(nameRoom)
           div(
             class="text-center text-primary fw-bold" 
-            style="font-size: 24px; font-weight: bold; color: #3E85FF"
+            style="font-size: 24px; font-weight: bold; color: #3E85FF ; margin-right: 200px"
           ) #{nameRoom.title}
 
     .row
-      .col-12
+      .col-md-9.col-12
         .chat(my_id = user.id )
           .inner-body
             each chat in chats 
@@ -64,7 +64,14 @@ block main
                 i( class="fa-regular fa-face-smile" class="text-primary")
               button
                 i.fa-solid.fa-paper-plane
-
+      if(nameRoom.users.length > 2)
+        .col-md-3.col-12
+                +box-head("Thành viên")
+                .user-sidebar
+                  ul.list-unstyled
+                    each u in nameRoom.users
+                      li.d-flex.align-items-center.mb-2
+                        span #{u.infoUser.fullName}
   div(class="tooltip" role="tooltip")           
     emoji-picker(class="light")
 

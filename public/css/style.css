@@ -895,3 +895,49 @@
 
 
 /* End Remove Friend */
+
+.user-sidebar {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  /* padding: 10px; */
+  /* max-height: 450px; */
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.user-sidebar h6 {
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.user-sidebar ul {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.user-sidebar li {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 8px 12px;
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.user-sidebar li:hover {
+  background-color: #e9ecef;
+}
+
+.user-sidebar i {
+  font-size: 10px;
+}
+
+.user-sidebar span {
+  font-size: 0.95rem;
+  color: #333;
+  font-weight: 500;
+}
+
