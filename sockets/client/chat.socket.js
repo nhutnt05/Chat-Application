@@ -1,4 +1,5 @@
 const Chat = require("../../models/chat.model");
+const RoomChat = require("../../models/room-chat.model");
 const uploadToCloudinary = require("../../helpers/uploadToCloudinary");
 
 module.exports = async (req, res) => {
@@ -7,9 +8,9 @@ module.exports = async (req, res) => {
   // Id of roomChat
   const roomChatId = req.params.roomChatId;
 
-  _io.once("connection", (socket) => {
+  _io.on("connection", (socket) => {
     socket.join(roomChatId);
-    
+
     // Listen client send message(object data)
     socket.on("client_send_message", async (data) => {
       let images = [];
@@ -42,6 +43,34 @@ module.exports = async (req, res) => {
         fullName: fullName,
         type: type,
       });
+    });
+
+    // User Dissolve Group
+    socket.on("client_dissolve_group", async (room) => {
+      console.log("sss")
+      try {
+        const roomChat = await RoomChat.findOne({
+          _id: room.idRoom,
+          users: {
+            $elemMatch: {
+              user_id: room.userId,
+              role: "superAdmin"
+            }
+          }
+        });
+
+        if (roomChat) {
+          await RoomChat.updateOne(
+            { _id: room.idRoom, },
+            {
+              deleted: true,
+              deleteAt: new Date(),
+            }
+          );
+
+        }
+      } catch (error) {
+      }
     });
   });
 };

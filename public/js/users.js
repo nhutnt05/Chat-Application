@@ -277,7 +277,7 @@ document.querySelectorAll('.inner-ellipsis').forEach(el => {
 
   // Toggle dropdown khi click icon
   icon.addEventListener('click', (e) => {
-    e.stopPropagation(); // tránh click ngoài đóng ngay
+    e.stopPropagation();
     box.classList.toggle('show');
   });
 
@@ -290,7 +290,7 @@ document.querySelectorAll('.inner-ellipsis').forEach(el => {
 
   // Click Unfriend
   box.addEventListener('click', () => {
-    const unfriend = box.dataset.fullName || box.getAttribute("fullName"); // lấy tên
+    const unfriend = box.dataset.fullName || box.getAttribute("fullName");
     const userId = box.closest(".col-6").getAttribute("user-id");
 
     if (!unfriend) return;
@@ -353,3 +353,6 @@ socket.on("server_return_user_offline", (userId) => {
     }
   }
 });
+
+
+

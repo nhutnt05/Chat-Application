@@ -33,7 +33,7 @@ if (formSendData) {
           images: images
         }
       );
-      
+
       e.target.elements.content.value = "";
       upload.resetPreviewPanel();
       // Hidden typing when send message
@@ -202,3 +202,45 @@ if (chatImages) {
   const gallery = new Viewer(chatImages);
 }
 // End Preview Images
+
+
+
+// Remove RoomChat users
+const btnRemoveChat = document.querySelector("[data-roomid]");
+
+btnRemoveChat.addEventListener('click', () => {
+  const titleRoom = btnRemoveChat.getAttribute("room-title");
+  const idRoom = btnRemoveChat.getAttribute("data-roomid");
+  const userId = btnRemoveChat.getAttribute("user-id");
+
+  Swal.fire({
+    title: `${titleRoom}`,
+    text: `Bạn có chắc chắn muốn giải tán nhóm "${titleRoom}" không?`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Đồng ý",
+    cancelButtonText: "Hủy",
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    reverseButtons: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      socket.emit("client_dissolve_group",
+        {
+          idRoom: idRoom,
+          userId: userId
+        }
+      );
+
+      Swal.fire({
+        title: `Đã giải tán nhóm ${titleRoom}!`,
+        icon: "success",
+        timer: 1200,
+        showConfirmButton: false,
+      }).then(() => {
+        window.location.href = "/rooms-chat";
+      });;
+
+    }
+  });
+});

@@ -895,7 +895,7 @@
 .user-sidebar {
   background-color: #fff;
   border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   /* padding: 10px; */
   /* max-height: 450px; */
   overflow-y: auto;
@@ -935,7 +935,7 @@
   font-size: 0.95rem;
   color: #333;
   font-weight: 500;
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 /* Wrapper để position relative */
@@ -951,7 +951,7 @@
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
- 
+
 }
 
 /* Dấu chấm trạng thái */
@@ -961,7 +961,8 @@
   right: 0;
   width: 12px;
   height: 12px;
-  border: 2px solid #fff; /* viền trắng xung quanh */
+  border: 2px solid #fff;
+  /* viền trắng xung quanh */
   border-radius: 50%;
   /* opacity: 0; */
   background-color: #28a745;
@@ -969,8 +970,46 @@
 
 /* Online: xanh */
 .user-online .status-dot[status="online"] {
-  
+
   opacity: 1;
 }
 
 
+.room-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 10px 16px;
+}
+
+.room-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #3E85FF;
+  margin: 0 auto;
+}
+
+.delete-group-btn {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-group-btn:hover {
+  background-color: #e04343;
+  transform: scale(1.05);
+}
+
+.delete-group-btn i {
+  font-size: 16px;
+}

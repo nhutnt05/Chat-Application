@@ -8,11 +8,18 @@ block main
     .row
       .col-12
         +box-head("Chat")
-        if(nameRoom)
-          div(
-            class="text-center text-primary fw-bold" 
-            style="font-size: 24px; font-weight: bold; color: #3E85FF ; margin-right: 200px"
-          ) #{nameRoom.title}
+        if nameRoom
+          .room-header
+            .room-title #{nameRoom.title}
+
+            each u in nameRoom.users
+              if (u.role == "superAdmin" && u.user_id == user.id)
+                button.delete-group-btn(
+                  data-roomid = nameRoom._id
+                  room-title = nameRoom.title
+                  user-id = user.id
+                  )
+                  i(class="bi bi-trash") Giải tán nhóm
 
     .row
       .col-md-9.col-12

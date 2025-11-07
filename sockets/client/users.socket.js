@@ -2,7 +2,7 @@ const User = require("../../models/user.model");
 const RoomChat = require("../../models/room-chat.model");
 
 module.exports = async (res) => {
-  _io.once("connection", (socket) => {
+  _io.on("connection", (socket) => {
     // User send add friend request
     socket.on("client_add_friend", async (userId) => {
       // userId of friend to add
@@ -252,7 +252,7 @@ module.exports = async (res) => {
       });
     });
 
-    // // User Unfriend
+    //User Unfriend
     socket.on("client_unfriend_server", async (userId) => {
 
       const myIdUser = res.locals.user.id;
@@ -263,7 +263,7 @@ module.exports = async (res) => {
           $elemMatch: { user_id: userId }
         }
       });
-   
+
 
       const userFriend = await User.findOne({
         _id: userId,
@@ -271,7 +271,6 @@ module.exports = async (res) => {
           $elemMatch: { user_id: myIdUser }
         }
       });
-      
 
       if (myUser && userFriend) {
         await User.updateOne(
@@ -285,6 +284,10 @@ module.exports = async (res) => {
         );
       }
     });
+
+
+
+
   });
 };
 

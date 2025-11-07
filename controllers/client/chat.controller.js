@@ -34,9 +34,11 @@ module.exports.index = async (req, res) => {
    for (const item of nameRoom.users) {
     const infoUser = await User.findOne({
       _id: item.user_id,
-    }).select("fullName statusOnline");
+    }).select("fullName statusOnline ");
     item.infoUser = infoUser;
+    item.role = item.role;
   }
+
 
   res.render("client/pages/chat/index", {
     pageTitle: "Chat",
