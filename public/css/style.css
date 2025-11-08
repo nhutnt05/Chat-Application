@@ -430,6 +430,23 @@
   margin-bottom: 3px;
 }
 
+.box-user.mess [btn-add-friend] {
+  display: none;
+}
+
+.box-user.mess [btn-messages-friend] {
+  display: inline-block;
+}
+
+.box-user [btn-messages-friend] {
+  display: none;
+}
+
+.box-user.dot .inner-ellipsis {
+  display: none;
+}
+
+
 .box-user [btn-cancel-friend] {
   display: none;
 }

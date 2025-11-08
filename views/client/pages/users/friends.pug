@@ -13,7 +13,7 @@ block main
     .row(users-friend)
       each user in users
         .col-6(user-id=user.id)
-          div(class="box-user")
+          div(class="box-user mess")
             div(class="inner-avatar")
               img(
                 src=(user.avatar ? user.avatar : "/images/avatar.jpg" )
@@ -29,7 +29,16 @@ block main
                 a(
                   href=`/messages/${user.roomChatId}`
                   class="btn btn-sm btn-primary mr-1"
+                  btn-messages-friend
                 ) Nhắn tin
+                button(
+                  class="btn btn-sm btn-primary mr-1"
+                  btn-add-friend=user.id
+                ) Kết bạn
+                button(
+                  class="btn btn-sm btn-secondary mr-1"
+                  btn-cancel-friend=user.id
+                ) Hủy
 
             div(
               class="inner-ellipsis"

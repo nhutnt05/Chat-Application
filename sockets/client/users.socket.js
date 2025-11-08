@@ -283,6 +283,8 @@ module.exports = async (res) => {
           { $pull: { friendList: { user_id: userId } } }
         );
       }
+    
+      socket.emit("server_return_unfriend_id", userId);
     });
 
 
