@@ -13,7 +13,7 @@ block main
             .room-title #{nameRoom.title}
 
             each u in nameRoom.users
-              if (u.role == "superAdmin" && u.user_id == user.id)
+              if (u.role == "superAdmin" && u.user_id == user.id && nameRoom.users.length > 2)
                 button.delete-group-btn(
                   data-roomid = nameRoom._id
                   room-title = nameRoom.title

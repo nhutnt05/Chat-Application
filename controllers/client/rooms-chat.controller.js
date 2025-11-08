@@ -7,7 +7,7 @@ module.exports.index = async (req, res) => {
   // id of oneself 
   const userId = res.locals.user.id;
 
-  
+
   // List Room Chat of myuser
   const listRoomChat = await RoomChat.find({
     "users.user_id": userId,
@@ -15,7 +15,7 @@ module.exports.index = async (req, res) => {
     deleted: false
   })
 
- 
+
   res.render("client/pages/rooms-chat/index", {
     pageTitle: "Danh sách phòng",
     listRoomChat: listRoomChat
@@ -45,27 +45,37 @@ module.exports.createPost = async (req, res) => {
   const title = req.body.title;
   const userId = req.body.usersId;
 
-  const roomChat = {
-    title: title,
-    typeRoom: "group",
-    users: []
-  }
+  try {
 
-  userId.forEach(user_id => {
-    roomChat.users.push({
-      user_id: user_id,
-      role: "user",
+    if (!userId || !Array.isArray(userId)) {
+      req.flash('error', 'Vui lòng chọn ít nhất hai thành viên');
+      return res.redirect('/rooms-chat/create');
+    }
+
+    const roomChat = {
+      title: title,
+      typeRoom: "group",
+      users: []
+    }
+
+    userId.forEach(user_id => {
+      roomChat.users.push({
+        user_id: user_id,
+        role: "user",
+      });
     });
-  });
 
-  roomChat.users.push({
-    user_id: res.locals.user.id,
-    role: "superAdmin",
-  });
+    roomChat.users.push({
+      user_id: res.locals.user.id,
+      role: "superAdmin",
+    });
 
-  const room = new RoomChat(roomChat);
-  await room.save();
+    const room = new RoomChat(roomChat);
+    await room.save();
 
-  res.redirect(`/messages/${room.id}`);
+    res.redirect(`/messages/${room.id}`);
+  } catch (error) {
+    res.redirect('/rooms-chat/create');
+  }
 
 }

@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
   // Id of roomChat
   const roomChatId = req.params.roomChatId;
 
-  _io.on("connection", (socket) => {
+  _io.once("connection", (socket) => {
     socket.join(roomChatId);
 
     // Listen client send message(object data)

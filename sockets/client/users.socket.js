@@ -2,7 +2,7 @@ const User = require("../../models/user.model");
 const RoomChat = require("../../models/room-chat.model");
 
 module.exports = async (res) => {
-  _io.on("connection", (socket) => {
+  _io.once("connection", (socket) => {
     // User send add friend request
     socket.on("client_add_friend", async (userId) => {
       // userId of friend to add
