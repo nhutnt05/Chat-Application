@@ -302,33 +302,8 @@ socket.on("server_return_unfriend_id", (idUser) => {
     const boxMess = user.querySelector(".box-user");
     if (boxMess) {
       boxMess.classList.remove("mess");
-      boxMess.classList.add("dot");
     }
   }
 });
 
 // End Unfriend
-
-// Cập nhật trạng thái online
-socket.on("server_return_user_online", (userId) => {
-  const userItem = document.querySelector(`.user-item[user-id="${userId}"]`);
-  if (userItem) {
-    const statusDot = userItem.querySelector(".status-dot");
-    if (statusDot) {
-      statusDot.classList.remove("status-offline");
-      statusDot.classList.add("status-online");
-    }
-  }
-});
-
-// Cập nhật trạng thái offline
-socket.on("server_return_user_offline", (userId) => {
-  const userItem = document.querySelector(`.user-item[user-id="${userId}"]`);
-  if (userItem) {
-    const statusDot = userItem.querySelector(".status-dot");
-    if (statusDot) {
-      statusDot.classList.remove("status-online");
-      statusDot.classList.add("status-offline");
-    }
-  }
-});

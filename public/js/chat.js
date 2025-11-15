@@ -126,11 +126,29 @@ const showTyping = () => {
 const buttonEmoji = document.querySelector(".emoji-button");
 if (buttonEmoji) {
   const tooltip = document.querySelector('.tooltip');
-  Popper.createPopper(buttonEmoji, tooltip);
+  // Tạo Popper với cấu hình chuẩn
+  const popperInstance = Popper.createPopper(buttonEmoji, tooltip, {
+    placement: 'top', // hoặc 'bottom' tùy bạn muốn hiển thị phía nào
+    modifiers: [
+      {
+        name: 'offset',
+        options: {
+          offset: [0, 8], // cách nút 8px
+        },
+      },
+      {
+        name: 'preventOverflow',
+        options: {
+          boundary: 'viewport', // tránh tràn màn hình
+        },
+      },
+    ],
+  });
 
-  buttonEmoji.onclick = () => {
+  buttonEmoji.addEventListener('click', () => {
     tooltip.classList.toggle('shown');
-  }
+    popperInstance.update(); // cập nhật vị trí khi hiển thị
+  });
 }
 
 // Insert emojiIcon to input

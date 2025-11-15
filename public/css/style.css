@@ -287,12 +287,7 @@
 }
 
 /* Khi có ảnh xem trước */
-.chat .inner-preview-images {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
+
 
 .chat .inner-preview-images img {
   width: 110px;
@@ -341,6 +336,20 @@
 .tooltip.shown {
   visibility: visible;
   opacity: 1;
+}
+
+.tooltip {
+  display: none;
+  position: absolute;
+  z-index: 9999;
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+.tooltip.shown {
+  display: block;
 }
 
 /* End Tooltip Emoji Picker */
